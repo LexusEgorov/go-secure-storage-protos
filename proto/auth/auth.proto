@@ -3,3 +3,55 @@ syntax = "proto3";
 package auth;
 
 option go_package = "/authpb";
+
+//Сервис авторизации 
+service Auth {
+  //Регистрирует нового пользователя
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  
+  //Авторизует пользователя и возвращает токен авторизации
+  rpc Login (LoginRequest) returns (LoginResponse);
+  
+  //Проверяет токен на валидность
+  rpc ValidateToken (ValidateTokenRequest) returns (ValidateTokenResponse);
+
+  //Обновляет токены
+  rpc Refresh (RefreshRequest) returns (RefreshResponse);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message RegisterResponse {
+  string jwt = 1;
+  string refresh = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string jwt = 1;
+  string refresh = 2;
+}
+
+message ValidateTokenRequest {
+  string token = 1;
+}
+
+message ValidateTokenResponse {
+  bool valid = 1;
+}
+
+message RefreshRequest {
+  string refresh = 1;
+}
+
+message RefreshResponse {
+  string jwt = 1;
+  string refresh = 2;
+}
