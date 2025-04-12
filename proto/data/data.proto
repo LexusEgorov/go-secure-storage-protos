@@ -3,3 +3,119 @@ syntax = "proto3";
 package data;
 
 option go_package = "/datapb";
+
+service Data {
+  //Загрузить данные
+  rpc Add (AddRequest) returns (AddResponse);
+  
+  //Получить данные
+  rpc Get (GetRequest) returns (GetResponse);
+}
+
+/* ========================================
+ *          Запросы для методов
+ * ======================================== */
+
+//Сохранение
+message AddRequest {
+  Category category = 1;
+
+  oneof request {
+    Password password = 2;
+    Text text = 3;
+    Binary binary = 4;
+    Card card = 5;
+  }
+}
+
+//Получение
+message GetRequest {
+  Category category = 1;
+  string filename = 2;
+}
+
+/* ========================================
+ *          Ответы для методов
+ * ======================================== */
+
+//Сохранение
+message AddResponse {
+  bool ok = 1;
+  oneof response {
+    SuccessAddResponse success = 2;
+    BadResponse bad = 3;
+  }
+}
+
+//Получение
+message GetResponse {
+  bool ok = 1;
+  oneof response {
+    BadResponse bad = 2;
+    SuccessGetResponse success = 3;
+  }
+}
+
+/* ========================================
+ *        Ответы на успешный запрос
+ * ======================================== */
+
+//Сохранение
+message SuccessAddResponse {
+  Category category = 1;
+  string filename = 2;
+}
+
+//Получение
+message SuccessGetResponse {
+  oneof data {
+    Password password = 1;
+    Text text = 2;
+    Binary binary = 3;
+    Card card = 4;
+  }
+}
+
+/* ========================================
+ *       Ответы на неуспешный запрос
+ * ======================================== */
+
+message BadResponse {
+  string message = 1;
+}
+
+/* ========================================
+ *      Типы хранимой информации
+ * ======================================== */
+
+//Перечисление типов
+enum Category {
+  PASSWORD = 0;
+  TEXT = 1;
+  BINARY = 2;
+  CARD = 3;
+}
+
+//Пароль
+message Password {
+  string login = 1;
+  string password = 2;
+}
+
+//Текст
+message Text {
+  string text = 1;
+}
+
+//Бинарник
+message Binary {
+  bytes binary = 1;
+}
+
+//Банковская карта
+message Card {
+  string number = 1;
+  string holder = 2;
+  string exp = 3;
+  string cvv = 4;
+}
