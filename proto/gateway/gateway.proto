@@ -3,3 +3,5 @@ syntax = "proto3";
 package gateway;
 
 option go_package = "/gatewaypb";
+
+//TODO: add redirect to services
