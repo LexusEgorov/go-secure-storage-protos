@@ -21,6 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Регистрация
 type RegisterRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
@@ -73,59 +74,7 @@ func (x *RegisterRequest) GetPassword() string {
 	return ""
 }
 
-type RegisterResponse struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// TODO: Add negative
-	Jwt           string `protobuf:"bytes,1,opt,name=jwt,proto3" json:"jwt,omitempty"`
-	Refresh       string `protobuf:"bytes,2,opt,name=refresh,proto3" json:"refresh,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RegisterResponse) Reset() {
-	*x = RegisterResponse{}
-	mi := &file_proto_auth_auth_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RegisterResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RegisterResponse) ProtoMessage() {}
-
-func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_auth_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RegisterResponse.ProtoReflect.Descriptor instead.
-func (*RegisterResponse) Descriptor() ([]byte, []int) {
-	return file_proto_auth_auth_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *RegisterResponse) GetJwt() string {
-	if x != nil {
-		return x.Jwt
-	}
-	return ""
-}
-
-func (x *RegisterResponse) GetRefresh() string {
-	if x != nil {
-		return x.Refresh
-	}
-	return ""
-}
-
+// Авторизация
 type LoginRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
@@ -136,7 +85,7 @@ type LoginRequest struct {
 
 func (x *LoginRequest) Reset() {
 	*x = LoginRequest{}
-	mi := &file_proto_auth_auth_proto_msgTypes[2]
+	mi := &file_proto_auth_auth_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -148,7 +97,7 @@ func (x *LoginRequest) String() string {
 func (*LoginRequest) ProtoMessage() {}
 
 func (x *LoginRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_auth_proto_msgTypes[2]
+	mi := &file_proto_auth_auth_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -161,7 +110,7 @@ func (x *LoginRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
 func (*LoginRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_auth_proto_rawDescGZIP(), []int{2}
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *LoginRequest) GetEmail() string {
@@ -178,59 +127,7 @@ func (x *LoginRequest) GetPassword() string {
 	return ""
 }
 
-type LoginResponse struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// TODO: Add negative
-	Jwt           string `protobuf:"bytes,1,opt,name=jwt,proto3" json:"jwt,omitempty"`
-	Refresh       string `protobuf:"bytes,2,opt,name=refresh,proto3" json:"refresh,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *LoginResponse) Reset() {
-	*x = LoginResponse{}
-	mi := &file_proto_auth_auth_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *LoginResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*LoginResponse) ProtoMessage() {}
-
-func (x *LoginResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_auth_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use LoginResponse.ProtoReflect.Descriptor instead.
-func (*LoginResponse) Descriptor() ([]byte, []int) {
-	return file_proto_auth_auth_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *LoginResponse) GetJwt() string {
-	if x != nil {
-		return x.Jwt
-	}
-	return ""
-}
-
-func (x *LoginResponse) GetRefresh() string {
-	if x != nil {
-		return x.Refresh
-	}
-	return ""
-}
-
+// Валидация
 type ValidateTokenRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
@@ -240,7 +137,7 @@ type ValidateTokenRequest struct {
 
 func (x *ValidateTokenRequest) Reset() {
 	*x = ValidateTokenRequest{}
-	mi := &file_proto_auth_auth_proto_msgTypes[4]
+	mi := &file_proto_auth_auth_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -252,7 +149,7 @@ func (x *ValidateTokenRequest) String() string {
 func (*ValidateTokenRequest) ProtoMessage() {}
 
 func (x *ValidateTokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_auth_proto_msgTypes[4]
+	mi := &file_proto_auth_auth_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -265,7 +162,7 @@ func (x *ValidateTokenRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateTokenRequest.ProtoReflect.Descriptor instead.
 func (*ValidateTokenRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_auth_proto_rawDescGZIP(), []int{4}
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ValidateTokenRequest) GetToken() string {
@@ -275,50 +172,7 @@ func (x *ValidateTokenRequest) GetToken() string {
 	return ""
 }
 
-type ValidateTokenResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Valid         bool                   `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ValidateTokenResponse) Reset() {
-	*x = ValidateTokenResponse{}
-	mi := &file_proto_auth_auth_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ValidateTokenResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ValidateTokenResponse) ProtoMessage() {}
-
-func (x *ValidateTokenResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_auth_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ValidateTokenResponse.ProtoReflect.Descriptor instead.
-func (*ValidateTokenResponse) Descriptor() ([]byte, []int) {
-	return file_proto_auth_auth_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *ValidateTokenResponse) GetValid() bool {
-	if x != nil {
-		return x.Valid
-	}
-	return false
-}
-
+// Обновление токена
 type RefreshRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Refresh       string                 `protobuf:"bytes,1,opt,name=refresh,proto3" json:"refresh,omitempty"`
@@ -328,7 +182,7 @@ type RefreshRequest struct {
 
 func (x *RefreshRequest) Reset() {
 	*x = RefreshRequest{}
-	mi := &file_proto_auth_auth_proto_msgTypes[6]
+	mi := &file_proto_auth_auth_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -340,7 +194,7 @@ func (x *RefreshRequest) String() string {
 func (*RefreshRequest) ProtoMessage() {}
 
 func (x *RefreshRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_auth_proto_msgTypes[6]
+	mi := &file_proto_auth_auth_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -353,7 +207,7 @@ func (x *RefreshRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshRequest.ProtoReflect.Descriptor instead.
 func (*RefreshRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_auth_proto_rawDescGZIP(), []int{6}
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *RefreshRequest) GetRefresh() string {
@@ -363,11 +217,242 @@ func (x *RefreshRequest) GetRefresh() string {
 	return ""
 }
 
+// Регистрация
+type RegisterResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Ok    bool                   `protobuf:"varint,1,opt,name=ok,proto3" json:"ok,omitempty"`
+	// Types that are valid to be assigned to Response:
+	//
+	//	*RegisterResponse_Success
+	//	*RegisterResponse_Bad
+	Response      isRegisterResponse_Response `protobuf_oneof:"response"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterResponse) Reset() {
+	*x = RegisterResponse{}
+	mi := &file_proto_auth_auth_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterResponse) ProtoMessage() {}
+
+func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auth_auth_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterResponse.ProtoReflect.Descriptor instead.
+func (*RegisterResponse) Descriptor() ([]byte, []int) {
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *RegisterResponse) GetOk() bool {
+	if x != nil {
+		return x.Ok
+	}
+	return false
+}
+
+func (x *RegisterResponse) GetResponse() isRegisterResponse_Response {
+	if x != nil {
+		return x.Response
+	}
+	return nil
+}
+
+func (x *RegisterResponse) GetSuccess() *SuccessTokenResponse {
+	if x != nil {
+		if x, ok := x.Response.(*RegisterResponse_Success); ok {
+			return x.Success
+		}
+	}
+	return nil
+}
+
+func (x *RegisterResponse) GetBad() *BadResponse {
+	if x != nil {
+		if x, ok := x.Response.(*RegisterResponse_Bad); ok {
+			return x.Bad
+		}
+	}
+	return nil
+}
+
+type isRegisterResponse_Response interface {
+	isRegisterResponse_Response()
+}
+
+type RegisterResponse_Success struct {
+	Success *SuccessTokenResponse `protobuf:"bytes,2,opt,name=success,proto3,oneof"`
+}
+
+type RegisterResponse_Bad struct {
+	Bad *BadResponse `protobuf:"bytes,3,opt,name=bad,proto3,oneof"`
+}
+
+func (*RegisterResponse_Success) isRegisterResponse_Response() {}
+
+func (*RegisterResponse_Bad) isRegisterResponse_Response() {}
+
+// Авторизация
+type LoginResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Ok    bool                   `protobuf:"varint,1,opt,name=ok,proto3" json:"ok,omitempty"`
+	// Types that are valid to be assigned to Response:
+	//
+	//	*LoginResponse_Success
+	//	*LoginResponse_Bad
+	Response      isLoginResponse_Response `protobuf_oneof:"response"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginResponse) Reset() {
+	*x = LoginResponse{}
+	mi := &file_proto_auth_auth_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginResponse) ProtoMessage() {}
+
+func (x *LoginResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auth_auth_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginResponse.ProtoReflect.Descriptor instead.
+func (*LoginResponse) Descriptor() ([]byte, []int) {
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *LoginResponse) GetOk() bool {
+	if x != nil {
+		return x.Ok
+	}
+	return false
+}
+
+func (x *LoginResponse) GetResponse() isLoginResponse_Response {
+	if x != nil {
+		return x.Response
+	}
+	return nil
+}
+
+func (x *LoginResponse) GetSuccess() *SuccessTokenResponse {
+	if x != nil {
+		if x, ok := x.Response.(*LoginResponse_Success); ok {
+			return x.Success
+		}
+	}
+	return nil
+}
+
+func (x *LoginResponse) GetBad() *BadResponse {
+	if x != nil {
+		if x, ok := x.Response.(*LoginResponse_Bad); ok {
+			return x.Bad
+		}
+	}
+	return nil
+}
+
+type isLoginResponse_Response interface {
+	isLoginResponse_Response()
+}
+
+type LoginResponse_Success struct {
+	Success *SuccessTokenResponse `protobuf:"bytes,2,opt,name=success,proto3,oneof"`
+}
+
+type LoginResponse_Bad struct {
+	Bad *BadResponse `protobuf:"bytes,3,opt,name=bad,proto3,oneof"`
+}
+
+func (*LoginResponse_Success) isLoginResponse_Response() {}
+
+func (*LoginResponse_Bad) isLoginResponse_Response() {}
+
+// Валидация
+type ValidateTokenResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Valid         bool                   `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ValidateTokenResponse) Reset() {
+	*x = ValidateTokenResponse{}
+	mi := &file_proto_auth_auth_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateTokenResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateTokenResponse) ProtoMessage() {}
+
+func (x *ValidateTokenResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auth_auth_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateTokenResponse.ProtoReflect.Descriptor instead.
+func (*ValidateTokenResponse) Descriptor() ([]byte, []int) {
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ValidateTokenResponse) GetValid() bool {
+	if x != nil {
+		return x.Valid
+	}
+	return false
+}
+
+// Обновление токена
 type RefreshResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// TODO: Add negative
-	Jwt           string `protobuf:"bytes,1,opt,name=jwt,proto3" json:"jwt,omitempty"`
-	Refresh       string `protobuf:"bytes,2,opt,name=refresh,proto3" json:"refresh,omitempty"`
+	Ok    bool                   `protobuf:"varint,1,opt,name=ok,proto3" json:"ok,omitempty"`
+	// Types that are valid to be assigned to Response:
+	//
+	//	*RefreshResponse_Success
+	//	*RefreshResponse_Bad
+	Response      isRefreshResponse_Response `protobuf_oneof:"response"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -402,16 +487,146 @@ func (*RefreshResponse) Descriptor() ([]byte, []int) {
 	return file_proto_auth_auth_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *RefreshResponse) GetJwt() string {
+func (x *RefreshResponse) GetOk() bool {
+	if x != nil {
+		return x.Ok
+	}
+	return false
+}
+
+func (x *RefreshResponse) GetResponse() isRefreshResponse_Response {
+	if x != nil {
+		return x.Response
+	}
+	return nil
+}
+
+func (x *RefreshResponse) GetSuccess() *SuccessTokenResponse {
+	if x != nil {
+		if x, ok := x.Response.(*RefreshResponse_Success); ok {
+			return x.Success
+		}
+	}
+	return nil
+}
+
+func (x *RefreshResponse) GetBad() *BadResponse {
+	if x != nil {
+		if x, ok := x.Response.(*RefreshResponse_Bad); ok {
+			return x.Bad
+		}
+	}
+	return nil
+}
+
+type isRefreshResponse_Response interface {
+	isRefreshResponse_Response()
+}
+
+type RefreshResponse_Success struct {
+	Success *SuccessTokenResponse `protobuf:"bytes,2,opt,name=success,proto3,oneof"`
+}
+
+type RefreshResponse_Bad struct {
+	Bad *BadResponse `protobuf:"bytes,3,opt,name=bad,proto3,oneof"`
+}
+
+func (*RefreshResponse_Success) isRefreshResponse_Response() {}
+
+func (*RefreshResponse_Bad) isRefreshResponse_Response() {}
+
+type SuccessTokenResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Jwt           string                 `protobuf:"bytes,1,opt,name=jwt,proto3" json:"jwt,omitempty"`
+	Refresh       string                 `protobuf:"bytes,2,opt,name=refresh,proto3" json:"refresh,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SuccessTokenResponse) Reset() {
+	*x = SuccessTokenResponse{}
+	mi := &file_proto_auth_auth_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SuccessTokenResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SuccessTokenResponse) ProtoMessage() {}
+
+func (x *SuccessTokenResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auth_auth_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SuccessTokenResponse.ProtoReflect.Descriptor instead.
+func (*SuccessTokenResponse) Descriptor() ([]byte, []int) {
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *SuccessTokenResponse) GetJwt() string {
 	if x != nil {
 		return x.Jwt
 	}
 	return ""
 }
 
-func (x *RefreshResponse) GetRefresh() string {
+func (x *SuccessTokenResponse) GetRefresh() string {
 	if x != nil {
 		return x.Refresh
+	}
+	return ""
+}
+
+type BadResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BadResponse) Reset() {
+	*x = BadResponse{}
+	mi := &file_proto_auth_auth_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BadResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BadResponse) ProtoMessage() {}
+
+func (x *BadResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auth_auth_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BadResponse.ProtoReflect.Descriptor instead.
+func (*BadResponse) Descriptor() ([]byte, []int) {
+	return file_proto_auth_auth_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *BadResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
 	}
 	return ""
 }
@@ -423,25 +638,39 @@ const file_proto_auth_auth_proto_rawDesc = "" +
 	"\x15proto/auth/auth.proto\x12\x04auth\"C\n" +
 	"\x0fRegisterRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\">\n" +
-	"\x10RegisterResponse\x12\x10\n" +
-	"\x03jwt\x18\x01 \x01(\tR\x03jwt\x12\x18\n" +
-	"\arefresh\x18\x02 \x01(\tR\arefresh\"@\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"@\n" +
 	"\fLoginRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\";\n" +
-	"\rLoginResponse\x12\x10\n" +
-	"\x03jwt\x18\x01 \x01(\tR\x03jwt\x12\x18\n" +
-	"\arefresh\x18\x02 \x01(\tR\arefresh\",\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\",\n" +
 	"\x14ValidateTokenRequest\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\"-\n" +
-	"\x15ValidateTokenResponse\x12\x14\n" +
-	"\x05valid\x18\x01 \x01(\bR\x05valid\"*\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"*\n" +
 	"\x0eRefreshRequest\x12\x18\n" +
-	"\arefresh\x18\x01 \x01(\tR\arefresh\"=\n" +
-	"\x0fRefreshResponse\x12\x10\n" +
+	"\arefresh\x18\x01 \x01(\tR\arefresh\"\x8d\x01\n" +
+	"\x10RegisterResponse\x12\x0e\n" +
+	"\x02ok\x18\x01 \x01(\bR\x02ok\x126\n" +
+	"\asuccess\x18\x02 \x01(\v2\x1a.auth.SuccessTokenResponseH\x00R\asuccess\x12%\n" +
+	"\x03bad\x18\x03 \x01(\v2\x11.auth.BadResponseH\x00R\x03badB\n" +
+	"\n" +
+	"\bresponse\"\x8a\x01\n" +
+	"\rLoginResponse\x12\x0e\n" +
+	"\x02ok\x18\x01 \x01(\bR\x02ok\x126\n" +
+	"\asuccess\x18\x02 \x01(\v2\x1a.auth.SuccessTokenResponseH\x00R\asuccess\x12%\n" +
+	"\x03bad\x18\x03 \x01(\v2\x11.auth.BadResponseH\x00R\x03badB\n" +
+	"\n" +
+	"\bresponse\"-\n" +
+	"\x15ValidateTokenResponse\x12\x14\n" +
+	"\x05valid\x18\x01 \x01(\bR\x05valid\"\x8c\x01\n" +
+	"\x0fRefreshResponse\x12\x0e\n" +
+	"\x02ok\x18\x01 \x01(\bR\x02ok\x126\n" +
+	"\asuccess\x18\x02 \x01(\v2\x1a.auth.SuccessTokenResponseH\x00R\asuccess\x12%\n" +
+	"\x03bad\x18\x03 \x01(\v2\x11.auth.BadResponseH\x00R\x03badB\n" +
+	"\n" +
+	"\bresponse\"B\n" +
+	"\x14SuccessTokenResponse\x12\x10\n" +
 	"\x03jwt\x18\x01 \x01(\tR\x03jwt\x12\x18\n" +
-	"\arefresh\x18\x02 \x01(\tR\arefresh2\xf5\x01\n" +
+	"\arefresh\x18\x02 \x01(\tR\arefresh\"'\n" +
+	"\vBadResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xf5\x01\n" +
 	"\x04Auth\x129\n" +
 	"\bRegister\x12\x15.auth.RegisterRequest\x1a\x16.auth.RegisterResponse\x120\n" +
 	"\x05Login\x12\x12.auth.LoginRequest\x1a\x13.auth.LoginResponse\x12H\n" +
@@ -460,31 +689,39 @@ func file_proto_auth_auth_proto_rawDescGZIP() []byte {
 	return file_proto_auth_auth_proto_rawDescData
 }
 
-var file_proto_auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_proto_auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_proto_auth_auth_proto_goTypes = []any{
 	(*RegisterRequest)(nil),       // 0: auth.RegisterRequest
-	(*RegisterResponse)(nil),      // 1: auth.RegisterResponse
-	(*LoginRequest)(nil),          // 2: auth.LoginRequest
-	(*LoginResponse)(nil),         // 3: auth.LoginResponse
-	(*ValidateTokenRequest)(nil),  // 4: auth.ValidateTokenRequest
-	(*ValidateTokenResponse)(nil), // 5: auth.ValidateTokenResponse
-	(*RefreshRequest)(nil),        // 6: auth.RefreshRequest
+	(*LoginRequest)(nil),          // 1: auth.LoginRequest
+	(*ValidateTokenRequest)(nil),  // 2: auth.ValidateTokenRequest
+	(*RefreshRequest)(nil),        // 3: auth.RefreshRequest
+	(*RegisterResponse)(nil),      // 4: auth.RegisterResponse
+	(*LoginResponse)(nil),         // 5: auth.LoginResponse
+	(*ValidateTokenResponse)(nil), // 6: auth.ValidateTokenResponse
 	(*RefreshResponse)(nil),       // 7: auth.RefreshResponse
+	(*SuccessTokenResponse)(nil),  // 8: auth.SuccessTokenResponse
+	(*BadResponse)(nil),           // 9: auth.BadResponse
 }
 var file_proto_auth_auth_proto_depIdxs = []int32{
-	0, // 0: auth.Auth.Register:input_type -> auth.RegisterRequest
-	2, // 1: auth.Auth.Login:input_type -> auth.LoginRequest
-	4, // 2: auth.Auth.ValidateToken:input_type -> auth.ValidateTokenRequest
-	6, // 3: auth.Auth.Refresh:input_type -> auth.RefreshRequest
-	1, // 4: auth.Auth.Register:output_type -> auth.RegisterResponse
-	3, // 5: auth.Auth.Login:output_type -> auth.LoginResponse
-	5, // 6: auth.Auth.ValidateToken:output_type -> auth.ValidateTokenResponse
-	7, // 7: auth.Auth.Refresh:output_type -> auth.RefreshResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	8,  // 0: auth.RegisterResponse.success:type_name -> auth.SuccessTokenResponse
+	9,  // 1: auth.RegisterResponse.bad:type_name -> auth.BadResponse
+	8,  // 2: auth.LoginResponse.success:type_name -> auth.SuccessTokenResponse
+	9,  // 3: auth.LoginResponse.bad:type_name -> auth.BadResponse
+	8,  // 4: auth.RefreshResponse.success:type_name -> auth.SuccessTokenResponse
+	9,  // 5: auth.RefreshResponse.bad:type_name -> auth.BadResponse
+	0,  // 6: auth.Auth.Register:input_type -> auth.RegisterRequest
+	1,  // 7: auth.Auth.Login:input_type -> auth.LoginRequest
+	2,  // 8: auth.Auth.ValidateToken:input_type -> auth.ValidateTokenRequest
+	3,  // 9: auth.Auth.Refresh:input_type -> auth.RefreshRequest
+	4,  // 10: auth.Auth.Register:output_type -> auth.RegisterResponse
+	5,  // 11: auth.Auth.Login:output_type -> auth.LoginResponse
+	6,  // 12: auth.Auth.ValidateToken:output_type -> auth.ValidateTokenResponse
+	7,  // 13: auth.Auth.Refresh:output_type -> auth.RefreshResponse
+	10, // [10:14] is the sub-list for method output_type
+	6,  // [6:10] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_proto_auth_auth_proto_init() }
@@ -492,13 +729,25 @@ func file_proto_auth_auth_proto_init() {
 	if File_proto_auth_auth_proto != nil {
 		return
 	}
+	file_proto_auth_auth_proto_msgTypes[4].OneofWrappers = []any{
+		(*RegisterResponse_Success)(nil),
+		(*RegisterResponse_Bad)(nil),
+	}
+	file_proto_auth_auth_proto_msgTypes[5].OneofWrappers = []any{
+		(*LoginResponse_Success)(nil),
+		(*LoginResponse_Bad)(nil),
+	}
+	file_proto_auth_auth_proto_msgTypes[7].OneofWrappers = []any{
+		(*RefreshResponse_Success)(nil),
+		(*RefreshResponse_Bad)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_auth_auth_proto_rawDesc), len(file_proto_auth_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
