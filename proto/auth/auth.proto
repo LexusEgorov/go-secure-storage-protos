@@ -25,6 +25,7 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
+  //TODO: Add negative
   string jwt = 1;
   string refresh = 2;
 }
@@ -35,6 +36,7 @@ message LoginRequest {
 }
 
 message LoginResponse {
+  //TODO: Add negative
   string jwt = 1;
   string refresh = 2;
 }
@@ -52,6 +54,7 @@ message RefreshRequest {
 }
 
 message RefreshResponse {
+  //TODO: Add negative
   string jwt = 1;
   string refresh = 2;
 }
