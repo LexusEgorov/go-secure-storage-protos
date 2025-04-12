@@ -19,42 +19,81 @@ service Auth {
   rpc Refresh (RefreshRequest) returns (RefreshResponse);
 }
 
+/* ========================================
+ *          Запросы для методов
+ * ======================================== */
+
+//Регистрация
 message RegisterRequest {
   string email = 1;
   string password = 2;
 }
 
-message RegisterResponse {
-  //TODO: Add negative
-  string jwt = 1;
-  string refresh = 2;
-}
-
+//Авторизация
 message LoginRequest {
   string email = 1;
   string password = 2;
 }
 
-message LoginResponse {
-  //TODO: Add negative
-  string jwt = 1;
-  string refresh = 2;
-}
-
+//Валидация
 message ValidateTokenRequest {
   string token = 1;
 }
 
-message ValidateTokenResponse {
-  bool valid = 1;
-}
-
+//Обновление токена
 message RefreshRequest {
   string refresh = 1;
 }
 
+/* ========================================
+ *          Ответы для методов
+ * ======================================== */
+
+//Регистрация
+message RegisterResponse {
+  bool ok = 1;
+  oneof response {
+    SuccessTokenResponse success = 2;
+    BadResponse bad = 3;
+  }
+}
+
+//Авторизация
+message LoginResponse {
+  bool ok = 1;
+  oneof response {
+    SuccessTokenResponse success = 2;
+    BadResponse bad = 3;
+  }
+}
+
+//Валидация
+message ValidateTokenResponse {
+  bool valid = 1;
+}
+
+//Обновление токена
 message RefreshResponse {
-  //TODO: Add negative
+  bool ok = 1;
+  oneof response {
+    SuccessTokenResponse success = 2;
+    BadResponse bad = 3;
+  }
+}
+
+/* ========================================
+ *        Ответы на успешный запрос
+ * ======================================== */
+
+message SuccessTokenResponse {
   string jwt = 1;
   string refresh = 2;
+}
+
+/* ========================================
+ *       Ответы на неуспешный запрос
+ * ======================================== */
+
+message BadResponse {
+  string message = 1;
 }
