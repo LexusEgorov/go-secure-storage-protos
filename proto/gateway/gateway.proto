@@ -2,6 +2,26 @@ syntax = "proto3";
 
 package gateway;
 
+import "proto/auth/auth.proto";
+import "proto/data/data.proto";
+import "proto/sync/sync.proto";
+
 option go_package = "/gatewaypb";
 
-//TODO: add redirect to services
+service Gateway {
+  //Auth
+  rpc Register (auth.RegisterRequest) returns (auth.RegisterResponse);
+  rpc Login (auth.LoginRequest) returns (auth.LoginResponse);
+  rpc ValidateToken (auth.ValidateTokenRequest) returns (auth.ValidateTokenResponse);
+  rpc Refresh (auth.RefreshRequest) returns (auth.RefreshResponse);
+
+  //Data
+  rpc Add (data.AddRequest) returns (data.AddResponse);
+  rpc Get (data.GetRequest) returns (data.GetResponse);
+  rpc GetBatch (data.GetBatchRequest) returns (data.GetBatchResponse);
+
+  //Sync
+  rpc GetUpdates (sync.GetUpdatesRequest) returns (sync.GetUpdatesResponse);
+  rpc AddUpdate (sync.AddUpdateRequest) returns (sync.AddUpdateResponse);
+  rpc Time (sync.TimeRequest) returns (sync.TimeResponse);
+}

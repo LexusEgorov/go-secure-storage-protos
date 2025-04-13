@@ -7,6 +7,9 @@
 package gatewaypb
 
 import (
+	authpb "/authpb"
+	datapb "/datapb"
+	syncpb "/syncpb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -24,16 +27,69 @@ var File_proto_gateway_gateway_proto protoreflect.FileDescriptor
 
 const file_proto_gateway_gateway_proto_rawDesc = "" +
 	"\n" +
-	"\x1bproto/gateway/gateway.proto\x12\agatewayB\fZ\n" +
+	"\x1bproto/gateway/gateway.proto\x12\agateway\x1a\x15proto/auth/auth.proto\x1a\x15proto/data/data.proto\x1a\x15proto/sync/sync.proto2\xb9\x04\n" +
+	"\aGateway\x129\n" +
+	"\bRegister\x12\x15.auth.RegisterRequest\x1a\x16.auth.RegisterResponse\x120\n" +
+	"\x05Login\x12\x12.auth.LoginRequest\x1a\x13.auth.LoginResponse\x12H\n" +
+	"\rValidateToken\x12\x1a.auth.ValidateTokenRequest\x1a\x1b.auth.ValidateTokenResponse\x126\n" +
+	"\aRefresh\x12\x14.auth.RefreshRequest\x1a\x15.auth.RefreshResponse\x12*\n" +
+	"\x03Add\x12\x10.data.AddRequest\x1a\x11.data.AddResponse\x12*\n" +
+	"\x03Get\x12\x10.data.GetRequest\x1a\x11.data.GetResponse\x129\n" +
+	"\bGetBatch\x12\x15.data.GetBatchRequest\x1a\x16.data.GetBatchResponse\x12?\n" +
+	"\n" +
+	"GetUpdates\x12\x17.sync.GetUpdatesRequest\x1a\x18.sync.GetUpdatesResponse\x12<\n" +
+	"\tAddUpdate\x12\x16.sync.AddUpdateRequest\x1a\x17.sync.AddUpdateResponse\x12-\n" +
+	"\x04Time\x12\x11.sync.TimeRequest\x1a\x12.sync.TimeResponseB\fZ\n" +
 	"/gatewaypbb\x06proto3"
 
-var file_proto_gateway_gateway_proto_goTypes = []any{}
+var file_proto_gateway_gateway_proto_goTypes = []any{
+	(*authpb.RegisterRequest)(nil),       // 0: auth.RegisterRequest
+	(*authpb.LoginRequest)(nil),          // 1: auth.LoginRequest
+	(*authpb.ValidateTokenRequest)(nil),  // 2: auth.ValidateTokenRequest
+	(*authpb.RefreshRequest)(nil),        // 3: auth.RefreshRequest
+	(*datapb.AddRequest)(nil),            // 4: data.AddRequest
+	(*datapb.GetRequest)(nil),            // 5: data.GetRequest
+	(*datapb.GetBatchRequest)(nil),       // 6: data.GetBatchRequest
+	(*syncpb.GetUpdatesRequest)(nil),     // 7: sync.GetUpdatesRequest
+	(*syncpb.AddUpdateRequest)(nil),      // 8: sync.AddUpdateRequest
+	(*syncpb.TimeRequest)(nil),           // 9: sync.TimeRequest
+	(*authpb.RegisterResponse)(nil),      // 10: auth.RegisterResponse
+	(*authpb.LoginResponse)(nil),         // 11: auth.LoginResponse
+	(*authpb.ValidateTokenResponse)(nil), // 12: auth.ValidateTokenResponse
+	(*authpb.RefreshResponse)(nil),       // 13: auth.RefreshResponse
+	(*datapb.AddResponse)(nil),           // 14: data.AddResponse
+	(*datapb.GetResponse)(nil),           // 15: data.GetResponse
+	(*datapb.GetBatchResponse)(nil),      // 16: data.GetBatchResponse
+	(*syncpb.GetUpdatesResponse)(nil),    // 17: sync.GetUpdatesResponse
+	(*syncpb.AddUpdateResponse)(nil),     // 18: sync.AddUpdateResponse
+	(*syncpb.TimeResponse)(nil),          // 19: sync.TimeResponse
+}
 var file_proto_gateway_gateway_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0,  // 0: gateway.Gateway.Register:input_type -> auth.RegisterRequest
+	1,  // 1: gateway.Gateway.Login:input_type -> auth.LoginRequest
+	2,  // 2: gateway.Gateway.ValidateToken:input_type -> auth.ValidateTokenRequest
+	3,  // 3: gateway.Gateway.Refresh:input_type -> auth.RefreshRequest
+	4,  // 4: gateway.Gateway.Add:input_type -> data.AddRequest
+	5,  // 5: gateway.Gateway.Get:input_type -> data.GetRequest
+	6,  // 6: gateway.Gateway.GetBatch:input_type -> data.GetBatchRequest
+	7,  // 7: gateway.Gateway.GetUpdates:input_type -> sync.GetUpdatesRequest
+	8,  // 8: gateway.Gateway.AddUpdate:input_type -> sync.AddUpdateRequest
+	9,  // 9: gateway.Gateway.Time:input_type -> sync.TimeRequest
+	10, // 10: gateway.Gateway.Register:output_type -> auth.RegisterResponse
+	11, // 11: gateway.Gateway.Login:output_type -> auth.LoginResponse
+	12, // 12: gateway.Gateway.ValidateToken:output_type -> auth.ValidateTokenResponse
+	13, // 13: gateway.Gateway.Refresh:output_type -> auth.RefreshResponse
+	14, // 14: gateway.Gateway.Add:output_type -> data.AddResponse
+	15, // 15: gateway.Gateway.Get:output_type -> data.GetResponse
+	16, // 16: gateway.Gateway.GetBatch:output_type -> data.GetBatchResponse
+	17, // 17: gateway.Gateway.GetUpdates:output_type -> sync.GetUpdatesResponse
+	18, // 18: gateway.Gateway.AddUpdate:output_type -> sync.AddUpdateResponse
+	19, // 19: gateway.Gateway.Time:output_type -> sync.TimeResponse
+	10, // [10:20] is the sub-list for method output_type
+	0,  // [0:10] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_proto_gateway_gateway_proto_init() }
@@ -49,7 +105,7 @@ func file_proto_gateway_gateway_proto_init() {
 			NumEnums:      0,
 			NumMessages:   0,
 			NumExtensions: 0,
-			NumServices:   0,
+			NumServices:   1,
 		},
 		GoTypes:           file_proto_gateway_gateway_proto_goTypes,
 		DependencyIndexes: file_proto_gateway_gateway_proto_depIdxs,
