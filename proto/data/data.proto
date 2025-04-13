@@ -10,6 +10,10 @@ service Data {
   
   //Получить данные
   rpc Get (GetRequest) returns (GetResponse);
+
+  //Получить пачку данных
+  //TODO: move to sync service (streaming) 
+  rpc GetBatch (GetBatchRequest) returns (GetBatchResponse);
 }
 
 /* ========================================
@@ -19,19 +23,17 @@ service Data {
 //Сохранение
 message AddRequest {
   Category category = 1;
-
-  oneof request {
-    Password password = 2;
-    Text text = 3;
-    Binary binary = 4;
-    Card card = 5;
-  }
+  DataItem data = 2;
 }
 
 //Получение
 message GetRequest {
   Category category = 1;
   string filename = 2;
+}
+
+message GetBatchRequest {
+  map<string, FileList> files = 1;
 }
 
 /* ========================================
@@ -56,6 +58,14 @@ message GetResponse {
   }
 }
 
+message GetBatchResponse {
+  bool ok = 1;
+  oneof response {
+    BadResponse bad = 2;
+    SuccessGetBatchResponse success = 3;
+  }
+}
+
 /* ========================================
  *        Ответы на успешный запрос
  * ======================================== */
@@ -68,12 +78,12 @@ message SuccessAddResponse {
 
 //Получение
 message SuccessGetResponse {
-  oneof data {
-    Password password = 1;
-    Text text = 2;
-    Binary binary = 3;
-    Card card = 4;
-  }
+  DataItem data = 1;
+}
+
+//Получение пачки данных
+message SuccessGetBatchResponse {
+  map<string, DataList> files = 1;
 }
 
 /* ========================================
@@ -94,6 +104,26 @@ enum Category {
   TEXT = 1;
   BINARY = 2;
   CARD = 3;
+}
+
+//Список имен файлов
+message FileList {
+  repeated string filenames = 1;
+}
+
+//Список файлов
+message DataList {
+  repeated DataItem data = 1;
+}
+
+//Объединение типов
+message DataItem {
+  oneof data {
+    Password password = 1;
+    Text text = 2;
+    Binary binary = 3;
+    Card card = 4;
+  }
 }
 
 //Пароль

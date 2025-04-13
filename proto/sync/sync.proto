@@ -4,4 +4,82 @@ package sync;
 
 option go_package = "/syncpb";
 
-//TODO: add sync methods
+service Sync {
+  //Получить обновления файлов
+  rpc GetUpdates (GetUpdatesRequest) returns (GetUpdatesResponse);
+
+  //Добавить обновление файла
+  rpc AddUpdate (AddUpdateRequest) returns (AddUpdateResponse);
+
+  //Синхронизировать время
+  rpc Time (TimeRequest) returns (TimeResponse);
+}
+
+/* ========================================
+ *          Запросы для методов
+ * ======================================== */
+
+message GetUpdatesRequest {
+  int64 time_since = 1;
+}
+
+message AddUpdateRequest {
+  int64 user_id = 1;
+  Category category = 2;
+  string filename = 3;
+}
+
+message TimeRequest {}
+
+/* ========================================
+ *          Ответы для методов
+ * ======================================== */
+
+message GetUpdatesResponse {
+  bool ok = 1;
+  oneof response {
+    SuccessGetUpdatesResponse success = 2;
+    BadResponse bad = 3;    
+  }
+}
+
+message AddUpdateResponse {
+  bool ok = 1;
+} 
+
+message TimeResponse {
+  bool ok = 1;
+  int64 server_timestamp = 2;
+}
+
+/* ========================================
+ *        Ответы на успешный запрос
+ * ======================================== */
+
+message SuccessGetUpdatesResponse {
+  map<string, FileList> files_to_update = 1;
+}
+
+/* ========================================
+ *       Ответы на неуспешный запрос
+ * ======================================== */
+
+message BadResponse {
+  string message = 1;
+}
+
+/* ========================================
+ *              Типы данных
+ * ======================================== */
+
+//Перечисление типов
+enum Category {
+  PASSWORD = 0;
+  TEXT = 1;
+  BINARY = 2;
+  CARD = 3;
+}
+
+ message FileList {
+  repeated string filenames = 1;
+}
