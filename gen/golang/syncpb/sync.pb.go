@@ -7,9 +7,11 @@
 package syncpb
 
 import (
+	datapb "/datapb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
+	sync "sync"
 	unsafe "unsafe"
 )
 
@@ -20,19 +22,500 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type GetUpdatesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TimeSince     int64                  `protobuf:"varint,1,opt,name=time_since,json=timeSince,proto3" json:"time_since,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUpdatesRequest) Reset() {
+	*x = GetUpdatesRequest{}
+	mi := &file_proto_sync_sync_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUpdatesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUpdatesRequest) ProtoMessage() {}
+
+func (x *GetUpdatesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_sync_sync_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUpdatesRequest.ProtoReflect.Descriptor instead.
+func (*GetUpdatesRequest) Descriptor() ([]byte, []int) {
+	return file_proto_sync_sync_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *GetUpdatesRequest) GetTimeSince() int64 {
+	if x != nil {
+		return x.TimeSince
+	}
+	return 0
+}
+
+type AddUpdateRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Category      datapb.Category        `protobuf:"varint,2,opt,name=category,proto3,enum=data.Category" json:"category,omitempty"`
+	Filename      string                 `protobuf:"bytes,3,opt,name=filename,proto3" json:"filename,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddUpdateRequest) Reset() {
+	*x = AddUpdateRequest{}
+	mi := &file_proto_sync_sync_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddUpdateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddUpdateRequest) ProtoMessage() {}
+
+func (x *AddUpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_sync_sync_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddUpdateRequest.ProtoReflect.Descriptor instead.
+func (*AddUpdateRequest) Descriptor() ([]byte, []int) {
+	return file_proto_sync_sync_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *AddUpdateRequest) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *AddUpdateRequest) GetCategory() datapb.Category {
+	if x != nil {
+		return x.Category
+	}
+	return datapb.Category(0)
+}
+
+func (x *AddUpdateRequest) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
+type TimeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TimeRequest) Reset() {
+	*x = TimeRequest{}
+	mi := &file_proto_sync_sync_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimeRequest) ProtoMessage() {}
+
+func (x *TimeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_sync_sync_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimeRequest.ProtoReflect.Descriptor instead.
+func (*TimeRequest) Descriptor() ([]byte, []int) {
+	return file_proto_sync_sync_proto_rawDescGZIP(), []int{2}
+}
+
+type GetUpdatesResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Ok    bool                   `protobuf:"varint,1,opt,name=ok,proto3" json:"ok,omitempty"`
+	// Types that are valid to be assigned to Response:
+	//
+	//	*GetUpdatesResponse_Success
+	//	*GetUpdatesResponse_Bad
+	Response      isGetUpdatesResponse_Response `protobuf_oneof:"response"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUpdatesResponse) Reset() {
+	*x = GetUpdatesResponse{}
+	mi := &file_proto_sync_sync_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUpdatesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUpdatesResponse) ProtoMessage() {}
+
+func (x *GetUpdatesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_sync_sync_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUpdatesResponse.ProtoReflect.Descriptor instead.
+func (*GetUpdatesResponse) Descriptor() ([]byte, []int) {
+	return file_proto_sync_sync_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetUpdatesResponse) GetOk() bool {
+	if x != nil {
+		return x.Ok
+	}
+	return false
+}
+
+func (x *GetUpdatesResponse) GetResponse() isGetUpdatesResponse_Response {
+	if x != nil {
+		return x.Response
+	}
+	return nil
+}
+
+func (x *GetUpdatesResponse) GetSuccess() *SuccessGetUpdatesResponse {
+	if x != nil {
+		if x, ok := x.Response.(*GetUpdatesResponse_Success); ok {
+			return x.Success
+		}
+	}
+	return nil
+}
+
+func (x *GetUpdatesResponse) GetBad() *BadResponse {
+	if x != nil {
+		if x, ok := x.Response.(*GetUpdatesResponse_Bad); ok {
+			return x.Bad
+		}
+	}
+	return nil
+}
+
+type isGetUpdatesResponse_Response interface {
+	isGetUpdatesResponse_Response()
+}
+
+type GetUpdatesResponse_Success struct {
+	Success *SuccessGetUpdatesResponse `protobuf:"bytes,2,opt,name=success,proto3,oneof"`
+}
+
+type GetUpdatesResponse_Bad struct {
+	Bad *BadResponse `protobuf:"bytes,3,opt,name=bad,proto3,oneof"`
+}
+
+func (*GetUpdatesResponse_Success) isGetUpdatesResponse_Response() {}
+
+func (*GetUpdatesResponse_Bad) isGetUpdatesResponse_Response() {}
+
+type AddUpdateResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ok            bool                   `protobuf:"varint,1,opt,name=ok,proto3" json:"ok,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddUpdateResponse) Reset() {
+	*x = AddUpdateResponse{}
+	mi := &file_proto_sync_sync_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddUpdateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddUpdateResponse) ProtoMessage() {}
+
+func (x *AddUpdateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_sync_sync_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddUpdateResponse.ProtoReflect.Descriptor instead.
+func (*AddUpdateResponse) Descriptor() ([]byte, []int) {
+	return file_proto_sync_sync_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *AddUpdateResponse) GetOk() bool {
+	if x != nil {
+		return x.Ok
+	}
+	return false
+}
+
+type TimeResponse struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Ok              bool                   `protobuf:"varint,1,opt,name=ok,proto3" json:"ok,omitempty"`
+	ServerTimestamp int64                  `protobuf:"varint,2,opt,name=server_timestamp,json=serverTimestamp,proto3" json:"server_timestamp,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *TimeResponse) Reset() {
+	*x = TimeResponse{}
+	mi := &file_proto_sync_sync_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimeResponse) ProtoMessage() {}
+
+func (x *TimeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_sync_sync_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimeResponse.ProtoReflect.Descriptor instead.
+func (*TimeResponse) Descriptor() ([]byte, []int) {
+	return file_proto_sync_sync_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *TimeResponse) GetOk() bool {
+	if x != nil {
+		return x.Ok
+	}
+	return false
+}
+
+func (x *TimeResponse) GetServerTimestamp() int64 {
+	if x != nil {
+		return x.ServerTimestamp
+	}
+	return 0
+}
+
+type SuccessGetUpdatesResponse struct {
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	FilesToUpdate map[string]*datapb.FileList `protobuf:"bytes,1,rep,name=files_to_update,json=filesToUpdate,proto3" json:"files_to_update,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SuccessGetUpdatesResponse) Reset() {
+	*x = SuccessGetUpdatesResponse{}
+	mi := &file_proto_sync_sync_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SuccessGetUpdatesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SuccessGetUpdatesResponse) ProtoMessage() {}
+
+func (x *SuccessGetUpdatesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_sync_sync_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SuccessGetUpdatesResponse.ProtoReflect.Descriptor instead.
+func (*SuccessGetUpdatesResponse) Descriptor() ([]byte, []int) {
+	return file_proto_sync_sync_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *SuccessGetUpdatesResponse) GetFilesToUpdate() map[string]*datapb.FileList {
+	if x != nil {
+		return x.FilesToUpdate
+	}
+	return nil
+}
+
+type BadResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BadResponse) Reset() {
+	*x = BadResponse{}
+	mi := &file_proto_sync_sync_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BadResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BadResponse) ProtoMessage() {}
+
+func (x *BadResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_sync_sync_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BadResponse.ProtoReflect.Descriptor instead.
+func (*BadResponse) Descriptor() ([]byte, []int) {
+	return file_proto_sync_sync_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *BadResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_proto_sync_sync_proto protoreflect.FileDescriptor
 
 const file_proto_sync_sync_proto_rawDesc = "" +
 	"\n" +
-	"\x15proto/sync/sync.proto\x12\x04syncB\tZ\a/syncpbb\x06proto3"
+	"\x15proto/sync/sync.proto\x12\x04sync\x1a\x15proto/data/data.proto\"2\n" +
+	"\x11GetUpdatesRequest\x12\x1d\n" +
+	"\n" +
+	"time_since\x18\x01 \x01(\x03R\ttimeSince\"s\n" +
+	"\x10AddUpdateRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12*\n" +
+	"\bcategory\x18\x02 \x01(\x0e2\x0e.data.CategoryR\bcategory\x12\x1a\n" +
+	"\bfilename\x18\x03 \x01(\tR\bfilename\"\r\n" +
+	"\vTimeRequest\"\x94\x01\n" +
+	"\x12GetUpdatesResponse\x12\x0e\n" +
+	"\x02ok\x18\x01 \x01(\bR\x02ok\x12;\n" +
+	"\asuccess\x18\x02 \x01(\v2\x1f.sync.SuccessGetUpdatesResponseH\x00R\asuccess\x12%\n" +
+	"\x03bad\x18\x03 \x01(\v2\x11.sync.BadResponseH\x00R\x03badB\n" +
+	"\n" +
+	"\bresponse\"#\n" +
+	"\x11AddUpdateResponse\x12\x0e\n" +
+	"\x02ok\x18\x01 \x01(\bR\x02ok\"I\n" +
+	"\fTimeResponse\x12\x0e\n" +
+	"\x02ok\x18\x01 \x01(\bR\x02ok\x12)\n" +
+	"\x10server_timestamp\x18\x02 \x01(\x03R\x0fserverTimestamp\"\xc9\x01\n" +
+	"\x19SuccessGetUpdatesResponse\x12Z\n" +
+	"\x0ffiles_to_update\x18\x01 \x03(\v22.sync.SuccessGetUpdatesResponse.FilesToUpdateEntryR\rfilesToUpdate\x1aP\n" +
+	"\x12FilesToUpdateEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12$\n" +
+	"\x05value\x18\x02 \x01(\v2\x0e.data.FileListR\x05value:\x028\x01\"'\n" +
+	"\vBadResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xb4\x01\n" +
+	"\x04Sync\x12?\n" +
+	"\n" +
+	"GetUpdates\x12\x17.sync.GetUpdatesRequest\x1a\x18.sync.GetUpdatesResponse\x12<\n" +
+	"\tAddUpdate\x12\x16.sync.AddUpdateRequest\x1a\x17.sync.AddUpdateResponse\x12-\n" +
+	"\x04Time\x12\x11.sync.TimeRequest\x1a\x12.sync.TimeResponseB\tZ\a/syncpbb\x06proto3"
 
-var file_proto_sync_sync_proto_goTypes = []any{}
+var (
+	file_proto_sync_sync_proto_rawDescOnce sync.Once
+	file_proto_sync_sync_proto_rawDescData []byte
+)
+
+func file_proto_sync_sync_proto_rawDescGZIP() []byte {
+	file_proto_sync_sync_proto_rawDescOnce.Do(func() {
+		file_proto_sync_sync_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_sync_sync_proto_rawDesc), len(file_proto_sync_sync_proto_rawDesc)))
+	})
+	return file_proto_sync_sync_proto_rawDescData
+}
+
+var file_proto_sync_sync_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_proto_sync_sync_proto_goTypes = []any{
+	(*GetUpdatesRequest)(nil),         // 0: sync.GetUpdatesRequest
+	(*AddUpdateRequest)(nil),          // 1: sync.AddUpdateRequest
+	(*TimeRequest)(nil),               // 2: sync.TimeRequest
+	(*GetUpdatesResponse)(nil),        // 3: sync.GetUpdatesResponse
+	(*AddUpdateResponse)(nil),         // 4: sync.AddUpdateResponse
+	(*TimeResponse)(nil),              // 5: sync.TimeResponse
+	(*SuccessGetUpdatesResponse)(nil), // 6: sync.SuccessGetUpdatesResponse
+	(*BadResponse)(nil),               // 7: sync.BadResponse
+	nil,                               // 8: sync.SuccessGetUpdatesResponse.FilesToUpdateEntry
+	(datapb.Category)(0),              // 9: data.Category
+	(*datapb.FileList)(nil),           // 10: data.FileList
+}
 var file_proto_sync_sync_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	9,  // 0: sync.AddUpdateRequest.category:type_name -> data.Category
+	6,  // 1: sync.GetUpdatesResponse.success:type_name -> sync.SuccessGetUpdatesResponse
+	7,  // 2: sync.GetUpdatesResponse.bad:type_name -> sync.BadResponse
+	8,  // 3: sync.SuccessGetUpdatesResponse.files_to_update:type_name -> sync.SuccessGetUpdatesResponse.FilesToUpdateEntry
+	10, // 4: sync.SuccessGetUpdatesResponse.FilesToUpdateEntry.value:type_name -> data.FileList
+	0,  // 5: sync.Sync.GetUpdates:input_type -> sync.GetUpdatesRequest
+	1,  // 6: sync.Sync.AddUpdate:input_type -> sync.AddUpdateRequest
+	2,  // 7: sync.Sync.Time:input_type -> sync.TimeRequest
+	3,  // 8: sync.Sync.GetUpdates:output_type -> sync.GetUpdatesResponse
+	4,  // 9: sync.Sync.AddUpdate:output_type -> sync.AddUpdateResponse
+	5,  // 10: sync.Sync.Time:output_type -> sync.TimeResponse
+	8,  // [8:11] is the sub-list for method output_type
+	5,  // [5:8] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_proto_sync_sync_proto_init() }
@@ -40,18 +523,23 @@ func file_proto_sync_sync_proto_init() {
 	if File_proto_sync_sync_proto != nil {
 		return
 	}
+	file_proto_sync_sync_proto_msgTypes[3].OneofWrappers = []any{
+		(*GetUpdatesResponse_Success)(nil),
+		(*GetUpdatesResponse_Bad)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_sync_sync_proto_rawDesc), len(file_proto_sync_sync_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   0,
+			NumMessages:   9,
 			NumExtensions: 0,
-			NumServices:   0,
+			NumServices:   1,
 		},
 		GoTypes:           file_proto_sync_sync_proto_goTypes,
 		DependencyIndexes: file_proto_sync_sync_proto_depIdxs,
+		MessageInfos:      file_proto_sync_sync_proto_msgTypes,
 	}.Build()
 	File_proto_sync_sync_proto = out.File
 	file_proto_sync_sync_proto_goTypes = nil

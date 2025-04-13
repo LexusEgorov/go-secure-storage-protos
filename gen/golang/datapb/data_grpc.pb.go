@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Data_Add_FullMethodName = "/data.Data/Add"
-	Data_Get_FullMethodName = "/data.Data/Get"
+	Data_Add_FullMethodName      = "/data.Data/Add"
+	Data_Get_FullMethodName      = "/data.Data/Get"
+	Data_GetBatch_FullMethodName = "/data.Data/GetBatch"
 )
 
 // DataClient is the client API for Data service.
@@ -31,6 +32,9 @@ type DataClient interface {
 	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
 	// Получить данные
 	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Получить пачку данных
+	// TODO: move to sync service (streaming)
+	GetBatch(ctx context.Context, in *GetBatchRequest, opts ...grpc.CallOption) (*GetBatchResponse, error)
 }
 
 type dataClient struct {
@@ -61,6 +65,16 @@ func (c *dataClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallO
 	return out, nil
 }
 
+func (c *dataClient) GetBatch(ctx context.Context, in *GetBatchRequest, opts ...grpc.CallOption) (*GetBatchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetBatchResponse)
+	err := c.cc.Invoke(ctx, Data_GetBatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DataServer is the server API for Data service.
 // All implementations must embed UnimplementedDataServer
 // for forward compatibility.
@@ -69,6 +83,9 @@ type DataServer interface {
 	Add(context.Context, *AddRequest) (*AddResponse, error)
 	// Получить данные
 	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Получить пачку данных
+	// TODO: move to sync service (streaming)
+	GetBatch(context.Context, *GetBatchRequest) (*GetBatchResponse, error)
 	mustEmbedUnimplementedDataServer()
 }
 
@@ -84,6 +101,9 @@ func (UnimplementedDataServer) Add(context.Context, *AddRequest) (*AddResponse, 
 }
 func (UnimplementedDataServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedDataServer) GetBatch(context.Context, *GetBatchRequest) (*GetBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBatch not implemented")
 }
 func (UnimplementedDataServer) mustEmbedUnimplementedDataServer() {}
 func (UnimplementedDataServer) testEmbeddedByValue()              {}
@@ -142,6 +162,24 @@ func _Data_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Data_GetBatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DataServer).GetBatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Data_GetBatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DataServer).GetBatch(ctx, req.(*GetBatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Data_ServiceDesc is the grpc.ServiceDesc for Data service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -156,6 +194,10 @@ var Data_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Get",
 			Handler:    _Data_Get_Handler,
+		},
+		{
+			MethodName: "GetBatch",
+			Handler:    _Data_GetBatch_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

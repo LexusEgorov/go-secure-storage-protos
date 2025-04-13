@@ -76,15 +76,9 @@ func (Category) EnumDescriptor() ([]byte, []int) {
 
 // Сохранение
 type AddRequest struct {
-	state    protoimpl.MessageState `protogen:"open.v1"`
-	Category Category               `protobuf:"varint,1,opt,name=category,proto3,enum=data.Category" json:"category,omitempty"`
-	// Types that are valid to be assigned to Request:
-	//
-	//	*AddRequest_Password
-	//	*AddRequest_Text
-	//	*AddRequest_Binary
-	//	*AddRequest_Card
-	Request       isAddRequest_Request `protobuf_oneof:"request"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Category      Category               `protobuf:"varint,1,opt,name=category,proto3,enum=data.Category" json:"category,omitempty"`
+	Data          *DataItem              `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -126,76 +120,12 @@ func (x *AddRequest) GetCategory() Category {
 	return Category_PASSWORD
 }
 
-func (x *AddRequest) GetRequest() isAddRequest_Request {
+func (x *AddRequest) GetData() *DataItem {
 	if x != nil {
-		return x.Request
+		return x.Data
 	}
 	return nil
 }
-
-func (x *AddRequest) GetPassword() *Password {
-	if x != nil {
-		if x, ok := x.Request.(*AddRequest_Password); ok {
-			return x.Password
-		}
-	}
-	return nil
-}
-
-func (x *AddRequest) GetText() *Text {
-	if x != nil {
-		if x, ok := x.Request.(*AddRequest_Text); ok {
-			return x.Text
-		}
-	}
-	return nil
-}
-
-func (x *AddRequest) GetBinary() *Binary {
-	if x != nil {
-		if x, ok := x.Request.(*AddRequest_Binary); ok {
-			return x.Binary
-		}
-	}
-	return nil
-}
-
-func (x *AddRequest) GetCard() *Card {
-	if x != nil {
-		if x, ok := x.Request.(*AddRequest_Card); ok {
-			return x.Card
-		}
-	}
-	return nil
-}
-
-type isAddRequest_Request interface {
-	isAddRequest_Request()
-}
-
-type AddRequest_Password struct {
-	Password *Password `protobuf:"bytes,2,opt,name=password,proto3,oneof"`
-}
-
-type AddRequest_Text struct {
-	Text *Text `protobuf:"bytes,3,opt,name=text,proto3,oneof"`
-}
-
-type AddRequest_Binary struct {
-	Binary *Binary `protobuf:"bytes,4,opt,name=binary,proto3,oneof"`
-}
-
-type AddRequest_Card struct {
-	Card *Card `protobuf:"bytes,5,opt,name=card,proto3,oneof"`
-}
-
-func (*AddRequest_Password) isAddRequest_Request() {}
-
-func (*AddRequest_Text) isAddRequest_Request() {}
-
-func (*AddRequest_Binary) isAddRequest_Request() {}
-
-func (*AddRequest_Card) isAddRequest_Request() {}
 
 // Получение
 type GetRequest struct {
@@ -250,6 +180,50 @@ func (x *GetRequest) GetFilename() string {
 	return ""
 }
 
+type GetBatchRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Files         map[string]*FileList   `protobuf:"bytes,1,rep,name=files,proto3" json:"files,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetBatchRequest) Reset() {
+	*x = GetBatchRequest{}
+	mi := &file_proto_data_data_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetBatchRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetBatchRequest) ProtoMessage() {}
+
+func (x *GetBatchRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_data_data_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetBatchRequest.ProtoReflect.Descriptor instead.
+func (*GetBatchRequest) Descriptor() ([]byte, []int) {
+	return file_proto_data_data_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetBatchRequest) GetFiles() map[string]*FileList {
+	if x != nil {
+		return x.Files
+	}
+	return nil
+}
+
 // Сохранение
 type AddResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -265,7 +239,7 @@ type AddResponse struct {
 
 func (x *AddResponse) Reset() {
 	*x = AddResponse{}
-	mi := &file_proto_data_data_proto_msgTypes[2]
+	mi := &file_proto_data_data_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -277,7 +251,7 @@ func (x *AddResponse) String() string {
 func (*AddResponse) ProtoMessage() {}
 
 func (x *AddResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_data_data_proto_msgTypes[2]
+	mi := &file_proto_data_data_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -290,7 +264,7 @@ func (x *AddResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddResponse.ProtoReflect.Descriptor instead.
 func (*AddResponse) Descriptor() ([]byte, []int) {
-	return file_proto_data_data_proto_rawDescGZIP(), []int{2}
+	return file_proto_data_data_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *AddResponse) GetOk() bool {
@@ -356,7 +330,7 @@ type GetResponse struct {
 
 func (x *GetResponse) Reset() {
 	*x = GetResponse{}
-	mi := &file_proto_data_data_proto_msgTypes[3]
+	mi := &file_proto_data_data_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -368,7 +342,7 @@ func (x *GetResponse) String() string {
 func (*GetResponse) ProtoMessage() {}
 
 func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_data_data_proto_msgTypes[3]
+	mi := &file_proto_data_data_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -381,7 +355,7 @@ func (x *GetResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
 func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_proto_data_data_proto_rawDescGZIP(), []int{3}
+	return file_proto_data_data_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetResponse) GetOk() bool {
@@ -432,6 +406,96 @@ func (*GetResponse_Bad) isGetResponse_Response() {}
 
 func (*GetResponse_Success) isGetResponse_Response() {}
 
+type GetBatchResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Ok    bool                   `protobuf:"varint,1,opt,name=ok,proto3" json:"ok,omitempty"`
+	// Types that are valid to be assigned to Response:
+	//
+	//	*GetBatchResponse_Bad
+	//	*GetBatchResponse_Success
+	Response      isGetBatchResponse_Response `protobuf_oneof:"response"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetBatchResponse) Reset() {
+	*x = GetBatchResponse{}
+	mi := &file_proto_data_data_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetBatchResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetBatchResponse) ProtoMessage() {}
+
+func (x *GetBatchResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_data_data_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetBatchResponse.ProtoReflect.Descriptor instead.
+func (*GetBatchResponse) Descriptor() ([]byte, []int) {
+	return file_proto_data_data_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetBatchResponse) GetOk() bool {
+	if x != nil {
+		return x.Ok
+	}
+	return false
+}
+
+func (x *GetBatchResponse) GetResponse() isGetBatchResponse_Response {
+	if x != nil {
+		return x.Response
+	}
+	return nil
+}
+
+func (x *GetBatchResponse) GetBad() *BadResponse {
+	if x != nil {
+		if x, ok := x.Response.(*GetBatchResponse_Bad); ok {
+			return x.Bad
+		}
+	}
+	return nil
+}
+
+func (x *GetBatchResponse) GetSuccess() *SuccessGetBatchResponse {
+	if x != nil {
+		if x, ok := x.Response.(*GetBatchResponse_Success); ok {
+			return x.Success
+		}
+	}
+	return nil
+}
+
+type isGetBatchResponse_Response interface {
+	isGetBatchResponse_Response()
+}
+
+type GetBatchResponse_Bad struct {
+	Bad *BadResponse `protobuf:"bytes,2,opt,name=bad,proto3,oneof"`
+}
+
+type GetBatchResponse_Success struct {
+	Success *SuccessGetBatchResponse `protobuf:"bytes,3,opt,name=success,proto3,oneof"`
+}
+
+func (*GetBatchResponse_Bad) isGetBatchResponse_Response() {}
+
+func (*GetBatchResponse_Success) isGetBatchResponse_Response() {}
+
 // Сохранение
 type SuccessAddResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -443,7 +507,7 @@ type SuccessAddResponse struct {
 
 func (x *SuccessAddResponse) Reset() {
 	*x = SuccessAddResponse{}
-	mi := &file_proto_data_data_proto_msgTypes[4]
+	mi := &file_proto_data_data_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -455,7 +519,7 @@ func (x *SuccessAddResponse) String() string {
 func (*SuccessAddResponse) ProtoMessage() {}
 
 func (x *SuccessAddResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_data_data_proto_msgTypes[4]
+	mi := &file_proto_data_data_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -468,7 +532,7 @@ func (x *SuccessAddResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SuccessAddResponse.ProtoReflect.Descriptor instead.
 func (*SuccessAddResponse) Descriptor() ([]byte, []int) {
-	return file_proto_data_data_proto_rawDescGZIP(), []int{4}
+	return file_proto_data_data_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *SuccessAddResponse) GetCategory() Category {
@@ -487,21 +551,15 @@ func (x *SuccessAddResponse) GetFilename() string {
 
 // Получение
 type SuccessGetResponse struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Types that are valid to be assigned to Data:
-	//
-	//	*SuccessGetResponse_Password
-	//	*SuccessGetResponse_Text
-	//	*SuccessGetResponse_Binary
-	//	*SuccessGetResponse_Card
-	Data          isSuccessGetResponse_Data `protobuf_oneof:"data"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          *DataItem              `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SuccessGetResponse) Reset() {
 	*x = SuccessGetResponse{}
-	mi := &file_proto_data_data_proto_msgTypes[5]
+	mi := &file_proto_data_data_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -513,7 +571,7 @@ func (x *SuccessGetResponse) String() string {
 func (*SuccessGetResponse) ProtoMessage() {}
 
 func (x *SuccessGetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_data_data_proto_msgTypes[5]
+	mi := &file_proto_data_data_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -526,79 +584,60 @@ func (x *SuccessGetResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SuccessGetResponse.ProtoReflect.Descriptor instead.
 func (*SuccessGetResponse) Descriptor() ([]byte, []int) {
-	return file_proto_data_data_proto_rawDescGZIP(), []int{5}
+	return file_proto_data_data_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *SuccessGetResponse) GetData() isSuccessGetResponse_Data {
+func (x *SuccessGetResponse) GetData() *DataItem {
 	if x != nil {
 		return x.Data
 	}
 	return nil
 }
 
-func (x *SuccessGetResponse) GetPassword() *Password {
+// Получение пачки данных
+type SuccessGetBatchResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Files         map[string]*DataList   `protobuf:"bytes,1,rep,name=files,proto3" json:"files,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SuccessGetBatchResponse) Reset() {
+	*x = SuccessGetBatchResponse{}
+	mi := &file_proto_data_data_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SuccessGetBatchResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SuccessGetBatchResponse) ProtoMessage() {}
+
+func (x *SuccessGetBatchResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_data_data_proto_msgTypes[8]
 	if x != nil {
-		if x, ok := x.Data.(*SuccessGetResponse_Password); ok {
-			return x.Password
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
 		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SuccessGetBatchResponse.ProtoReflect.Descriptor instead.
+func (*SuccessGetBatchResponse) Descriptor() ([]byte, []int) {
+	return file_proto_data_data_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *SuccessGetBatchResponse) GetFiles() map[string]*DataList {
+	if x != nil {
+		return x.Files
 	}
 	return nil
 }
-
-func (x *SuccessGetResponse) GetText() *Text {
-	if x != nil {
-		if x, ok := x.Data.(*SuccessGetResponse_Text); ok {
-			return x.Text
-		}
-	}
-	return nil
-}
-
-func (x *SuccessGetResponse) GetBinary() *Binary {
-	if x != nil {
-		if x, ok := x.Data.(*SuccessGetResponse_Binary); ok {
-			return x.Binary
-		}
-	}
-	return nil
-}
-
-func (x *SuccessGetResponse) GetCard() *Card {
-	if x != nil {
-		if x, ok := x.Data.(*SuccessGetResponse_Card); ok {
-			return x.Card
-		}
-	}
-	return nil
-}
-
-type isSuccessGetResponse_Data interface {
-	isSuccessGetResponse_Data()
-}
-
-type SuccessGetResponse_Password struct {
-	Password *Password `protobuf:"bytes,1,opt,name=password,proto3,oneof"`
-}
-
-type SuccessGetResponse_Text struct {
-	Text *Text `protobuf:"bytes,2,opt,name=text,proto3,oneof"`
-}
-
-type SuccessGetResponse_Binary struct {
-	Binary *Binary `protobuf:"bytes,3,opt,name=binary,proto3,oneof"`
-}
-
-type SuccessGetResponse_Card struct {
-	Card *Card `protobuf:"bytes,4,opt,name=card,proto3,oneof"`
-}
-
-func (*SuccessGetResponse_Password) isSuccessGetResponse_Data() {}
-
-func (*SuccessGetResponse_Text) isSuccessGetResponse_Data() {}
-
-func (*SuccessGetResponse_Binary) isSuccessGetResponse_Data() {}
-
-func (*SuccessGetResponse_Card) isSuccessGetResponse_Data() {}
 
 type BadResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -609,7 +648,7 @@ type BadResponse struct {
 
 func (x *BadResponse) Reset() {
 	*x = BadResponse{}
-	mi := &file_proto_data_data_proto_msgTypes[6]
+	mi := &file_proto_data_data_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -621,7 +660,7 @@ func (x *BadResponse) String() string {
 func (*BadResponse) ProtoMessage() {}
 
 func (x *BadResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_data_data_proto_msgTypes[6]
+	mi := &file_proto_data_data_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -634,7 +673,7 @@ func (x *BadResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BadResponse.ProtoReflect.Descriptor instead.
 func (*BadResponse) Descriptor() ([]byte, []int) {
-	return file_proto_data_data_proto_rawDescGZIP(), []int{6}
+	return file_proto_data_data_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *BadResponse) GetMessage() string {
@@ -643,6 +682,211 @@ func (x *BadResponse) GetMessage() string {
 	}
 	return ""
 }
+
+// Список имен файлов
+type FileList struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Filenames     []string               `protobuf:"bytes,1,rep,name=filenames,proto3" json:"filenames,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FileList) Reset() {
+	*x = FileList{}
+	mi := &file_proto_data_data_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FileList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FileList) ProtoMessage() {}
+
+func (x *FileList) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_data_data_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FileList.ProtoReflect.Descriptor instead.
+func (*FileList) Descriptor() ([]byte, []int) {
+	return file_proto_data_data_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *FileList) GetFilenames() []string {
+	if x != nil {
+		return x.Filenames
+	}
+	return nil
+}
+
+// Список файлов
+type DataList struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          []*DataItem            `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DataList) Reset() {
+	*x = DataList{}
+	mi := &file_proto_data_data_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DataList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DataList) ProtoMessage() {}
+
+func (x *DataList) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_data_data_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DataList.ProtoReflect.Descriptor instead.
+func (*DataList) Descriptor() ([]byte, []int) {
+	return file_proto_data_data_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *DataList) GetData() []*DataItem {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// Объединение типов
+type DataItem struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Data:
+	//
+	//	*DataItem_Password
+	//	*DataItem_Text
+	//	*DataItem_Binary
+	//	*DataItem_Card
+	Data          isDataItem_Data `protobuf_oneof:"data"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DataItem) Reset() {
+	*x = DataItem{}
+	mi := &file_proto_data_data_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DataItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DataItem) ProtoMessage() {}
+
+func (x *DataItem) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_data_data_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DataItem.ProtoReflect.Descriptor instead.
+func (*DataItem) Descriptor() ([]byte, []int) {
+	return file_proto_data_data_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *DataItem) GetData() isDataItem_Data {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+func (x *DataItem) GetPassword() *Password {
+	if x != nil {
+		if x, ok := x.Data.(*DataItem_Password); ok {
+			return x.Password
+		}
+	}
+	return nil
+}
+
+func (x *DataItem) GetText() *Text {
+	if x != nil {
+		if x, ok := x.Data.(*DataItem_Text); ok {
+			return x.Text
+		}
+	}
+	return nil
+}
+
+func (x *DataItem) GetBinary() *Binary {
+	if x != nil {
+		if x, ok := x.Data.(*DataItem_Binary); ok {
+			return x.Binary
+		}
+	}
+	return nil
+}
+
+func (x *DataItem) GetCard() *Card {
+	if x != nil {
+		if x, ok := x.Data.(*DataItem_Card); ok {
+			return x.Card
+		}
+	}
+	return nil
+}
+
+type isDataItem_Data interface {
+	isDataItem_Data()
+}
+
+type DataItem_Password struct {
+	Password *Password `protobuf:"bytes,1,opt,name=password,proto3,oneof"`
+}
+
+type DataItem_Text struct {
+	Text *Text `protobuf:"bytes,2,opt,name=text,proto3,oneof"`
+}
+
+type DataItem_Binary struct {
+	Binary *Binary `protobuf:"bytes,3,opt,name=binary,proto3,oneof"`
+}
+
+type DataItem_Card struct {
+	Card *Card `protobuf:"bytes,4,opt,name=card,proto3,oneof"`
+}
+
+func (*DataItem_Password) isDataItem_Data() {}
+
+func (*DataItem_Text) isDataItem_Data() {}
+
+func (*DataItem_Binary) isDataItem_Data() {}
+
+func (*DataItem_Card) isDataItem_Data() {}
 
 // Пароль
 type Password struct {
@@ -655,7 +899,7 @@ type Password struct {
 
 func (x *Password) Reset() {
 	*x = Password{}
-	mi := &file_proto_data_data_proto_msgTypes[7]
+	mi := &file_proto_data_data_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -667,7 +911,7 @@ func (x *Password) String() string {
 func (*Password) ProtoMessage() {}
 
 func (x *Password) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_data_data_proto_msgTypes[7]
+	mi := &file_proto_data_data_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -680,7 +924,7 @@ func (x *Password) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Password.ProtoReflect.Descriptor instead.
 func (*Password) Descriptor() ([]byte, []int) {
-	return file_proto_data_data_proto_rawDescGZIP(), []int{7}
+	return file_proto_data_data_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *Password) GetLogin() string {
@@ -707,7 +951,7 @@ type Text struct {
 
 func (x *Text) Reset() {
 	*x = Text{}
-	mi := &file_proto_data_data_proto_msgTypes[8]
+	mi := &file_proto_data_data_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -719,7 +963,7 @@ func (x *Text) String() string {
 func (*Text) ProtoMessage() {}
 
 func (x *Text) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_data_data_proto_msgTypes[8]
+	mi := &file_proto_data_data_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -732,7 +976,7 @@ func (x *Text) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Text.ProtoReflect.Descriptor instead.
 func (*Text) Descriptor() ([]byte, []int) {
-	return file_proto_data_data_proto_rawDescGZIP(), []int{8}
+	return file_proto_data_data_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Text) GetText() string {
@@ -752,7 +996,7 @@ type Binary struct {
 
 func (x *Binary) Reset() {
 	*x = Binary{}
-	mi := &file_proto_data_data_proto_msgTypes[9]
+	mi := &file_proto_data_data_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -764,7 +1008,7 @@ func (x *Binary) String() string {
 func (*Binary) ProtoMessage() {}
 
 func (x *Binary) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_data_data_proto_msgTypes[9]
+	mi := &file_proto_data_data_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -777,7 +1021,7 @@ func (x *Binary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Binary.ProtoReflect.Descriptor instead.
 func (*Binary) Descriptor() ([]byte, []int) {
-	return file_proto_data_data_proto_rawDescGZIP(), []int{9}
+	return file_proto_data_data_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *Binary) GetBinary() []byte {
@@ -800,7 +1044,7 @@ type Card struct {
 
 func (x *Card) Reset() {
 	*x = Card{}
-	mi := &file_proto_data_data_proto_msgTypes[10]
+	mi := &file_proto_data_data_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -812,7 +1056,7 @@ func (x *Card) String() string {
 func (*Card) ProtoMessage() {}
 
 func (x *Card) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_data_data_proto_msgTypes[10]
+	mi := &file_proto_data_data_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -825,7 +1069,7 @@ func (x *Card) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Card.ProtoReflect.Descriptor instead.
 func (*Card) Descriptor() ([]byte, []int) {
-	return file_proto_data_data_proto_rawDescGZIP(), []int{10}
+	return file_proto_data_data_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *Card) GetNumber() string {
@@ -860,21 +1104,21 @@ var File_proto_data_data_proto protoreflect.FileDescriptor
 
 const file_proto_data_data_proto_rawDesc = "" +
 	"\n" +
-	"\x15proto/data/data.proto\x12\x04data\"\xdd\x01\n" +
+	"\x15proto/data/data.proto\x12\x04data\"\\\n" +
 	"\n" +
 	"AddRequest\x12*\n" +
-	"\bcategory\x18\x01 \x01(\x0e2\x0e.data.CategoryR\bcategory\x12,\n" +
-	"\bpassword\x18\x02 \x01(\v2\x0e.data.PasswordH\x00R\bpassword\x12 \n" +
-	"\x04text\x18\x03 \x01(\v2\n" +
-	".data.TextH\x00R\x04text\x12&\n" +
-	"\x06binary\x18\x04 \x01(\v2\f.data.BinaryH\x00R\x06binary\x12 \n" +
-	"\x04card\x18\x05 \x01(\v2\n" +
-	".data.CardH\x00R\x04cardB\t\n" +
-	"\arequest\"T\n" +
+	"\bcategory\x18\x01 \x01(\x0e2\x0e.data.CategoryR\bcategory\x12\"\n" +
+	"\x04data\x18\x02 \x01(\v2\x0e.data.DataItemR\x04data\"T\n" +
 	"\n" +
 	"GetRequest\x12*\n" +
 	"\bcategory\x18\x01 \x01(\x0e2\x0e.data.CategoryR\bcategory\x12\x1a\n" +
-	"\bfilename\x18\x02 \x01(\tR\bfilename\"\x86\x01\n" +
+	"\bfilename\x18\x02 \x01(\tR\bfilename\"\x93\x01\n" +
+	"\x0fGetBatchRequest\x126\n" +
+	"\x05files\x18\x01 \x03(\v2 .data.GetBatchRequest.FilesEntryR\x05files\x1aH\n" +
+	"\n" +
+	"FilesEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12$\n" +
+	"\x05value\x18\x02 \x01(\v2\x0e.data.FileListR\x05value:\x028\x01\"\x86\x01\n" +
 	"\vAddResponse\x12\x0e\n" +
 	"\x02ok\x18\x01 \x01(\bR\x02ok\x124\n" +
 	"\asuccess\x18\x02 \x01(\v2\x18.data.SuccessAddResponseH\x00R\asuccess\x12%\n" +
@@ -886,20 +1130,38 @@ const file_proto_data_data_proto_rawDesc = "" +
 	"\x03bad\x18\x02 \x01(\v2\x11.data.BadResponseH\x00R\x03bad\x124\n" +
 	"\asuccess\x18\x03 \x01(\v2\x18.data.SuccessGetResponseH\x00R\asuccessB\n" +
 	"\n" +
+	"\bresponse\"\x90\x01\n" +
+	"\x10GetBatchResponse\x12\x0e\n" +
+	"\x02ok\x18\x01 \x01(\bR\x02ok\x12%\n" +
+	"\x03bad\x18\x02 \x01(\v2\x11.data.BadResponseH\x00R\x03bad\x129\n" +
+	"\asuccess\x18\x03 \x01(\v2\x1d.data.SuccessGetBatchResponseH\x00R\asuccessB\n" +
+	"\n" +
 	"\bresponse\"\\\n" +
 	"\x12SuccessAddResponse\x12*\n" +
 	"\bcategory\x18\x01 \x01(\x0e2\x0e.data.CategoryR\bcategory\x12\x1a\n" +
-	"\bfilename\x18\x02 \x01(\tR\bfilename\"\xb6\x01\n" +
-	"\x12SuccessGetResponse\x12,\n" +
+	"\bfilename\x18\x02 \x01(\tR\bfilename\"8\n" +
+	"\x12SuccessGetResponse\x12\"\n" +
+	"\x04data\x18\x01 \x01(\v2\x0e.data.DataItemR\x04data\"\xa3\x01\n" +
+	"\x17SuccessGetBatchResponse\x12>\n" +
+	"\x05files\x18\x01 \x03(\v2(.data.SuccessGetBatchResponse.FilesEntryR\x05files\x1aH\n" +
+	"\n" +
+	"FilesEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12$\n" +
+	"\x05value\x18\x02 \x01(\v2\x0e.data.DataListR\x05value:\x028\x01\"'\n" +
+	"\vBadResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"(\n" +
+	"\bFileList\x12\x1c\n" +
+	"\tfilenames\x18\x01 \x03(\tR\tfilenames\".\n" +
+	"\bDataList\x12\"\n" +
+	"\x04data\x18\x01 \x03(\v2\x0e.data.DataItemR\x04data\"\xac\x01\n" +
+	"\bDataItem\x12,\n" +
 	"\bpassword\x18\x01 \x01(\v2\x0e.data.PasswordH\x00R\bpassword\x12 \n" +
 	"\x04text\x18\x02 \x01(\v2\n" +
 	".data.TextH\x00R\x04text\x12&\n" +
 	"\x06binary\x18\x03 \x01(\v2\f.data.BinaryH\x00R\x06binary\x12 \n" +
 	"\x04card\x18\x04 \x01(\v2\n" +
 	".data.CardH\x00R\x04cardB\x06\n" +
-	"\x04data\"'\n" +
-	"\vBadResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"<\n" +
+	"\x04data\"<\n" +
 	"\bPassword\x12\x14\n" +
 	"\x05login\x18\x01 \x01(\tR\x05login\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\"\x1a\n" +
@@ -917,10 +1179,11 @@ const file_proto_data_data_proto_rawDesc = "" +
 	"\x04TEXT\x10\x01\x12\n" +
 	"\n" +
 	"\x06BINARY\x10\x02\x12\b\n" +
-	"\x04CARD\x10\x032^\n" +
+	"\x04CARD\x10\x032\x99\x01\n" +
 	"\x04Data\x12*\n" +
 	"\x03Add\x12\x10.data.AddRequest\x1a\x11.data.AddResponse\x12*\n" +
-	"\x03Get\x12\x10.data.GetRequest\x1a\x11.data.GetResponseB\tZ\a/datapbb\x06proto3"
+	"\x03Get\x12\x10.data.GetRequest\x1a\x11.data.GetResponse\x129\n" +
+	"\bGetBatch\x12\x15.data.GetBatchRequest\x1a\x16.data.GetBatchResponseB\tZ\a/datapbb\x06proto3"
 
 var (
 	file_proto_data_data_proto_rawDescOnce sync.Once
@@ -935,46 +1198,61 @@ func file_proto_data_data_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_data_data_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_data_data_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_proto_data_data_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_proto_data_data_proto_goTypes = []any{
-	(Category)(0),              // 0: data.Category
-	(*AddRequest)(nil),         // 1: data.AddRequest
-	(*GetRequest)(nil),         // 2: data.GetRequest
-	(*AddResponse)(nil),        // 3: data.AddResponse
-	(*GetResponse)(nil),        // 4: data.GetResponse
-	(*SuccessAddResponse)(nil), // 5: data.SuccessAddResponse
-	(*SuccessGetResponse)(nil), // 6: data.SuccessGetResponse
-	(*BadResponse)(nil),        // 7: data.BadResponse
-	(*Password)(nil),           // 8: data.Password
-	(*Text)(nil),               // 9: data.Text
-	(*Binary)(nil),             // 10: data.Binary
-	(*Card)(nil),               // 11: data.Card
+	(Category)(0),                   // 0: data.Category
+	(*AddRequest)(nil),              // 1: data.AddRequest
+	(*GetRequest)(nil),              // 2: data.GetRequest
+	(*GetBatchRequest)(nil),         // 3: data.GetBatchRequest
+	(*AddResponse)(nil),             // 4: data.AddResponse
+	(*GetResponse)(nil),             // 5: data.GetResponse
+	(*GetBatchResponse)(nil),        // 6: data.GetBatchResponse
+	(*SuccessAddResponse)(nil),      // 7: data.SuccessAddResponse
+	(*SuccessGetResponse)(nil),      // 8: data.SuccessGetResponse
+	(*SuccessGetBatchResponse)(nil), // 9: data.SuccessGetBatchResponse
+	(*BadResponse)(nil),             // 10: data.BadResponse
+	(*FileList)(nil),                // 11: data.FileList
+	(*DataList)(nil),                // 12: data.DataList
+	(*DataItem)(nil),                // 13: data.DataItem
+	(*Password)(nil),                // 14: data.Password
+	(*Text)(nil),                    // 15: data.Text
+	(*Binary)(nil),                  // 16: data.Binary
+	(*Card)(nil),                    // 17: data.Card
+	nil,                             // 18: data.GetBatchRequest.FilesEntry
+	nil,                             // 19: data.SuccessGetBatchResponse.FilesEntry
 }
 var file_proto_data_data_proto_depIdxs = []int32{
 	0,  // 0: data.AddRequest.category:type_name -> data.Category
-	8,  // 1: data.AddRequest.password:type_name -> data.Password
-	9,  // 2: data.AddRequest.text:type_name -> data.Text
-	10, // 3: data.AddRequest.binary:type_name -> data.Binary
-	11, // 4: data.AddRequest.card:type_name -> data.Card
-	0,  // 5: data.GetRequest.category:type_name -> data.Category
-	5,  // 6: data.AddResponse.success:type_name -> data.SuccessAddResponse
-	7,  // 7: data.AddResponse.bad:type_name -> data.BadResponse
-	7,  // 8: data.GetResponse.bad:type_name -> data.BadResponse
-	6,  // 9: data.GetResponse.success:type_name -> data.SuccessGetResponse
+	13, // 1: data.AddRequest.data:type_name -> data.DataItem
+	0,  // 2: data.GetRequest.category:type_name -> data.Category
+	18, // 3: data.GetBatchRequest.files:type_name -> data.GetBatchRequest.FilesEntry
+	7,  // 4: data.AddResponse.success:type_name -> data.SuccessAddResponse
+	10, // 5: data.AddResponse.bad:type_name -> data.BadResponse
+	10, // 6: data.GetResponse.bad:type_name -> data.BadResponse
+	8,  // 7: data.GetResponse.success:type_name -> data.SuccessGetResponse
+	10, // 8: data.GetBatchResponse.bad:type_name -> data.BadResponse
+	9,  // 9: data.GetBatchResponse.success:type_name -> data.SuccessGetBatchResponse
 	0,  // 10: data.SuccessAddResponse.category:type_name -> data.Category
-	8,  // 11: data.SuccessGetResponse.password:type_name -> data.Password
-	9,  // 12: data.SuccessGetResponse.text:type_name -> data.Text
-	10, // 13: data.SuccessGetResponse.binary:type_name -> data.Binary
-	11, // 14: data.SuccessGetResponse.card:type_name -> data.Card
-	1,  // 15: data.Data.Add:input_type -> data.AddRequest
-	2,  // 16: data.Data.Get:input_type -> data.GetRequest
-	3,  // 17: data.Data.Add:output_type -> data.AddResponse
-	4,  // 18: data.Data.Get:output_type -> data.GetResponse
-	17, // [17:19] is the sub-list for method output_type
-	15, // [15:17] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	13, // 11: data.SuccessGetResponse.data:type_name -> data.DataItem
+	19, // 12: data.SuccessGetBatchResponse.files:type_name -> data.SuccessGetBatchResponse.FilesEntry
+	13, // 13: data.DataList.data:type_name -> data.DataItem
+	14, // 14: data.DataItem.password:type_name -> data.Password
+	15, // 15: data.DataItem.text:type_name -> data.Text
+	16, // 16: data.DataItem.binary:type_name -> data.Binary
+	17, // 17: data.DataItem.card:type_name -> data.Card
+	11, // 18: data.GetBatchRequest.FilesEntry.value:type_name -> data.FileList
+	12, // 19: data.SuccessGetBatchResponse.FilesEntry.value:type_name -> data.DataList
+	1,  // 20: data.Data.Add:input_type -> data.AddRequest
+	2,  // 21: data.Data.Get:input_type -> data.GetRequest
+	3,  // 22: data.Data.GetBatch:input_type -> data.GetBatchRequest
+	4,  // 23: data.Data.Add:output_type -> data.AddResponse
+	5,  // 24: data.Data.Get:output_type -> data.GetResponse
+	6,  // 25: data.Data.GetBatch:output_type -> data.GetBatchResponse
+	23, // [23:26] is the sub-list for method output_type
+	20, // [20:23] is the sub-list for method input_type
+	20, // [20:20] is the sub-list for extension type_name
+	20, // [20:20] is the sub-list for extension extendee
+	0,  // [0:20] is the sub-list for field type_name
 }
 
 func init() { file_proto_data_data_proto_init() }
@@ -982,25 +1260,23 @@ func file_proto_data_data_proto_init() {
 	if File_proto_data_data_proto != nil {
 		return
 	}
-	file_proto_data_data_proto_msgTypes[0].OneofWrappers = []any{
-		(*AddRequest_Password)(nil),
-		(*AddRequest_Text)(nil),
-		(*AddRequest_Binary)(nil),
-		(*AddRequest_Card)(nil),
-	}
-	file_proto_data_data_proto_msgTypes[2].OneofWrappers = []any{
+	file_proto_data_data_proto_msgTypes[3].OneofWrappers = []any{
 		(*AddResponse_Success)(nil),
 		(*AddResponse_Bad)(nil),
 	}
-	file_proto_data_data_proto_msgTypes[3].OneofWrappers = []any{
+	file_proto_data_data_proto_msgTypes[4].OneofWrappers = []any{
 		(*GetResponse_Bad)(nil),
 		(*GetResponse_Success)(nil),
 	}
 	file_proto_data_data_proto_msgTypes[5].OneofWrappers = []any{
-		(*SuccessGetResponse_Password)(nil),
-		(*SuccessGetResponse_Text)(nil),
-		(*SuccessGetResponse_Binary)(nil),
-		(*SuccessGetResponse_Card)(nil),
+		(*GetBatchResponse_Bad)(nil),
+		(*GetBatchResponse_Success)(nil),
+	}
+	file_proto_data_data_proto_msgTypes[12].OneofWrappers = []any{
+		(*DataItem_Password)(nil),
+		(*DataItem_Text)(nil),
+		(*DataItem_Binary)(nil),
+		(*DataItem_Card)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1008,7 +1284,7 @@ func file_proto_data_data_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_data_data_proto_rawDesc), len(file_proto_data_data_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   11,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

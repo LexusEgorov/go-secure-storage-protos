@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package sync;
 
+import "proto/data/data.proto";
+
 option go_package = "/syncpb";
 
 service Sync {
@@ -25,7 +27,7 @@ message GetUpdatesRequest {
 
 message AddUpdateRequest {
   int64 user_id = 1;
-  Category category = 2;
+  data.Category category = 2;
   string filename = 3;
 }
 
@@ -57,7 +59,7 @@ message TimeResponse {
  * ======================================== */
 
 message SuccessGetUpdatesResponse {
-  map<string, FileList> files_to_update = 1;
+  map<string, data.FileList> files_to_update = 1;
 }
 
 /* ========================================
@@ -66,20 +68,4 @@ message SuccessGetUpdatesResponse {
 
 message BadResponse {
   string message = 1;
-}
-
-/* ========================================
- *              Типы данных
- * ======================================== */
-
-//Перечисление типов
-enum Category {
-  PASSWORD = 0;
-  TEXT = 1;
-  BINARY = 2;
-  CARD = 3;
-}
-
- message FileList {
-  repeated string filenames = 1;
 }
